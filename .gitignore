@@ -1,0 +1,7 @@
+*.o
+src/invokegc
+/credentials.json
+/disk*
+.idea
+/old
+/benchmarks
