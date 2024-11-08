@@ -7,7 +7,6 @@
 #include <getopt.h>
 #include <cstdlib>
 #include <string>
-#include <fcntl.h>
 
 extern "C" {
     #include <libzbd/zbd.h>
@@ -20,14 +19,14 @@ extern "C" {
 struct ParsedArgs {
     std::string device;
     std::string type;
-    int num_regions = 0;
+    int num_zones = 0;
 };
 
 bool parse_arguments(int argc, char* argv[], ParsedArgs &args) {
     // Define the option structure for long options
     const struct option long_options[] = {
         {"type", required_argument, 0, 't'},
-        {"num-regions", required_argument, 0, 'n'},
+        {"num-zones", required_argument, 0, 'n'},
         {0, 0, 0, 0}  // End of options
     };
 
@@ -46,14 +45,14 @@ bool parse_arguments(int argc, char* argv[], ParsedArgs &args) {
                 break;
             case 'n':
                 if (args.type == "SSD") {
-                    args.num_regions = atoi(optarg);
+                    args.num_zones = atoi(optarg);
                 } else {
-                    std::cerr << "Error: --num-regions is only valid with type 'SSD'.\n";
+                    std::cerr << "Error: --num-zones is only valid with type 'SSD'.\n";
                     return false;
                 }
                 break;
             default:
-                std::cerr << "Usage: " << argv[0] << " DEVICE --type SSD|ZNS [--num-regions NUM]\n";
+                std::cerr << "Usage: " << argv[0] << " DEVICE --type SSD|ZNS [--num-zones NUM]\n";
                 return false;
         }
     }
@@ -64,7 +63,7 @@ bool parse_arguments(int argc, char* argv[], ParsedArgs &args) {
     } else {
         std::cerr << "Error: DEVICE is a required argument.\n";
         std::cerr << "Usage: " << argv[0]
-                  << " DEVICE --type SSD|ZNS [--num-regions NUM]\n";
+                  << " DEVICE --type SSD|ZNS [--num-zones NUM]\n";
         return false;
     }
 
@@ -83,19 +82,16 @@ int main(int argc, char* argv[]) {
     std::cout << "Device: " << args.device << std::endl;
     std::cout << "Type: " << args.type << std::endl;
     if (args.type == "SSD") {
-        std::cout << "Number of Regions: " << args.num_regions << std::endl;
+        std::cout << "Number of Zones: " << args.num_zones << std::endl;
     }
 
-    struct zbd_info info;
-    int fd = zbd_open(args.device.c_str(), O_RDWR, &info);
-
     // Create an SSD object
-    ConvSSD ssd("SSD Disk", 8);
+    ConvSSD ssd(args.device, 8);
 
     std::cout << "--------------------------\n";
 
     // Create a ZNSSSD object
-    ZNSSSD znssd("ZNS SSD Disk");
+    ZNSSSD znssd(args.device);
 
     return 0;
 }

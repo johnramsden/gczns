@@ -2,6 +2,7 @@
 #define ZNSSSD_H
 
 #include "Disk.hpp"
+#include <fcntl.h>
 
 class ZNSSSD : public Disk {
 public:
@@ -17,6 +18,8 @@ public:
 
 private:
     unsigned int nr_zones;
+    int fd;
+    
 };
 
 #endif // ZNSSSD_H
