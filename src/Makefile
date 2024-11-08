@@ -15,10 +15,10 @@ LDIR = -L/data/john/libs/lib
 LIBS = -lm -lpthread -lzbd
 
 # Headers and Objects
-_DEPS = gczns.hpp util.hpp Disk.hpp ZNSSSD.hpp SSD.hpp
+_DEPS = gczns.hpp util.hpp Disk.hpp ZNSSSD.hpp ConvSSD.hpp
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
-_OBJ = gczns.o Disk.o SSD.o ZNSSSD.o
+_OBJ = gczns.o Disk.o ConvSSD.o ZNSSSD.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 # Rules for object files

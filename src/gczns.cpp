@@ -9,13 +9,13 @@
 #include <string>
 #include <fcntl.h>
 
-#include "Disk.hpp"
-#include "SSD.hpp"
-#include "ZNSSSD.hpp"
-
 extern "C" {
     #include <libzbd/zbd.h>
 }
+
+#include "Disk.hpp"
+#include "ConvSSD.hpp"
+#include "ZNSSSD.hpp"
 
 struct ParsedArgs {
     std::string device;
@@ -86,25 +86,16 @@ int main(int argc, char* argv[]) {
         std::cout << "Number of Regions: " << args.num_regions << std::endl;
     }
 
-
     struct zbd_info info;
     int fd = zbd_open(args.device.c_str(), O_RDWR, &info);
 
     // Create an SSD object
-    SSD ssd("SSD Disk", 8);
-    ssd.displayInfo();
-    ssd.displayRegions();
-    ssd.readData();
-    ssd.writeData();
+    ConvSSD ssd("SSD Disk", 8);
 
     std::cout << "--------------------------\n";
 
     // Create a ZNSSSD object
-    ZNSSSD znssd("ZNS SSD Disk", 16);
-    znssd.displayInfo();
-    znssd.displayZones();
-    znssd.readData();
-    znssd.writeData();
+    ZNSSSD znssd("ZNS SSD Disk");
 
     return 0;
 }

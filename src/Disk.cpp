@@ -2,12 +2,10 @@
 #include <iostream>
 
 // Constructor
-Disk::Disk(const std::string& name) : name(name) {}
+Disk::Disk(const std::string& device) : name(device) {}
 
 // Virtual destructor
 Disk::~Disk() {}
 
-// Display disk information
-void Disk::displayInfo() const {
-    std::cout << "Disk Name: " << name << "\n";
-}
+// Virtual destructor
+void Disk::display_info() const {}

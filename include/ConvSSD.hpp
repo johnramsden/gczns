@@ -1,22 +1,20 @@
-#ifndef ZNSSSD_H
-#define ZNSSSD_H
+#ifndef SSD_H
+#define SSD_H
 
 #include "Disk.hpp"
 
-class ZNSSSD : public Disk {
+class ConvSSD : public Disk {
 public:
     // Constructor
-    ZNSSSD(const std::string& device);
-
-    ~ZNSSSD();
+    ConvSSD(const std::string& device, int nr_zones);
+    ~ConvSSD();
 
     // Override read and write functions
     void read_data() const override;
     void write_data() override;
     void display_info() const override;
-
 private:
     unsigned int nr_zones;
 };
 
-#endif // ZNSSSD_H
+#endif // SSD_H
