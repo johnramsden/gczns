@@ -1,3 +1,5 @@
+
+
 # Directories and Compiler
 IDIR = ../include
 IEXTRADIR = /data/john/libs/include
@@ -14,6 +16,8 @@ LDIR = -L/data/john/libs/lib
 
 LIBS = -lm -lpthread -lzbd
 
+LDFLAGS += -Wl,-rpath,/data/john/libs/lib
+
 # Headers and Objects
 _DEPS = gczns.hpp util.hpp Disk.hpp ZNSSSD.hpp ConvSSD.hpp
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
@@ -27,7 +31,7 @@ $(ODIR)/%.o: %.cpp $(DEPS)
 
 # Linking final executable
 gczns: $(OBJ)
-	$(CXX) -o $@ $^ $(CXXFLAGS) $(LIBS) $(LDIR)
+	$(CXX) -o $@ $^ $(CXXFLAGS) $(LIBS) $(LDIR) $(LDFLAGS)
 
 .PHONY: clean
 
