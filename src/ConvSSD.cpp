@@ -2,7 +2,8 @@
 #include <iostream>
 
 // Constructor
-ConvSSD::ConvSSD(const std::string& device, int nr_zones) : Disk(device), nr_zones(nr_zones) {}
+ConvSSD::ConvSSD(const std::string& device, std::uint64_t block_size, std::uint32_t nr_zones)
+: Disk(device, block_size), nr_zones(nr_zones) {}
 
 ConvSSD::~ConvSSD() {}
 
@@ -18,6 +19,8 @@ void ConvSSD::write_data() {
 
 // Display disk information
 void ConvSSD::display_info() const {
-    std::cout << "Disk Name: " << name << "\n";
+    std::cout << "Device: " << device << "\n";
+    std::cout << "Type: ConvSSD\n";
     std::cout << "NR Zones: " << nr_zones << "\n";
+    std::cout << "Block Size: " << block_size << "\n";
 }

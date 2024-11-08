@@ -7,7 +7,7 @@
 class ZNSSSD : public Disk {
 public:
     // Constructor
-    ZNSSSD(const std::string& device);
+    ZNSSSD(const std::string& device, const std::uint64_t block_size);
 
     ~ZNSSSD();
 
@@ -19,7 +19,6 @@ public:
 private:
     unsigned int nr_zones;
     int fd;
-    
 };
 
 #endif // ZNSSSD_H

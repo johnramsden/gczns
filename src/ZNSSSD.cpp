@@ -2,7 +2,7 @@
 #include <iostream>
 
 // Constructor
-ZNSSSD::ZNSSSD(const std::string& device) : Disk(device) {
+ZNSSSD::ZNSSSD(const std::string& device, std::uint64_t block_size) : Disk(device, block_size) {
     struct zbd_info info;
     fd = zbd_open(device.c_str(), O_RDWR, &info);
     if (fd < 0) {
@@ -32,6 +32,8 @@ void ZNSSSD::write_data() {
 
 // Display disk information
 void ZNSSSD::display_info() const {
-    std::cout << "Disk Name: " << name << "\n";
+    std::cout << "Device: " << device << "\n";
+    std::cout << "Type: ZNSSSD\n";
     std::cout << "NR Zones: " << nr_zones << "\n";
+    std::cout << "Block Size: " << block_size << "\n";
 }

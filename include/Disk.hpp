@@ -6,11 +6,12 @@ extern "C" {
 }
 
 #include <string>
+#include <cstdint>
 
 class Disk {
 public:
     // Constructor with disk device
-    Disk(const std::string& device);
+    Disk(const std::string& device, const std::uint64_t block_size);
 
     // Virtual destructor to ensure proper cleanup in derived classes
     virtual ~Disk();
@@ -23,7 +24,8 @@ public:
     virtual void display_info() const = 0;
 
 protected:
-    std::string name;  // Name of the disk
+    std::string device;
+    std::uint64_t block_size;
 };
 
 #endif // DISK_H

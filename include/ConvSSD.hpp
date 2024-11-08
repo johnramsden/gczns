@@ -6,7 +6,7 @@
 class ConvSSD : public Disk {
 public:
     // Constructor
-    ConvSSD(const std::string& device, int nr_zones);
+    ConvSSD(const std::string& device, const std::uint64_t block_size, std::uint32_t nr_zones);
     ~ConvSSD();
 
     // Override read and write functions
@@ -14,7 +14,7 @@ public:
     void write_data() override;
     void display_info() const override;
 private:
-    unsigned int nr_zones;
+    std::uint32_t nr_zones;
 };
 
 #endif // SSD_H
